@@ -15,15 +15,15 @@ namespace Azuser.Client.Framework
 
     public class UpdateService : IUpdateService
     {
-        private const string UPDATE_URI = "https://github.com/inzanit/azuser";
+        private const string UPDATE_URI = "http://inzanit.com/Releases/Azuser/";
 
         public async Task<bool> TryCheckForUpdate(IProgress<int> progress)
         {
             try
             {
-                using (var manager = UpdateManager.GitHubUpdateManager(UPDATE_URI))
+                using (var manager = new UpdateManager(UPDATE_URI))
                 {
-                    var update = await manager.Result.CheckForUpdate(false, (value) => progress?.Report(value));
+                    var update = await manager.CheckForUpdate();
 
                     return update.ReleasesToApply.Any();
                 }
@@ -40,9 +40,9 @@ namespace Azuser.Client.Framework
         {
             try
             {
-                using (var manager = UpdateManager.GitHubUpdateManager(UPDATE_URI))
+                using (var manager = new UpdateManager(UPDATE_URI))
                 {
-                    var version = await manager.Result.UpdateApp((value) => progress?.Report(value));
+                    var version = await manager.UpdateApp((value) => progress?.Report(value));
 
                     return new UpdatedVersion(true, version.Filename);
                 }
