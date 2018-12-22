@@ -26,6 +26,12 @@ namespace Azuser.Client.Framework.Resolver
             builder.RegisterType<MessageBoxHelper>().As<IMessageBoxHelper>();
             builder.RegisterType<ShellManager>().As<IShellManager>();
 
+#if DEBUG
+            builder.RegisterType<DebugUpdateService>().As<IUpdateService>();
+#else
+            builder.RegisterType<UpdateService>().As<IUpdateService>();
+#endif
+
             builder.RegisterType<Resolver>().As<IResolver>();
 
             _container = builder.Build();
