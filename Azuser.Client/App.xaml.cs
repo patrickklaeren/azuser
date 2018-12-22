@@ -35,14 +35,6 @@ namespace Azuser.Client
             Log.Debug("Resolver initialized");
 
             Log.Information("Checking for update");
-            var window = Resolver.Get<Updater>();
-
-            var dataContext = (UpdaterViewModel)window.DataContext;
-
-            var progress = new Progress<int>(value => dataContext.CurrentProgress = value);
-
-            window.Show();
-            return;
 
             var hasUpdated = await TryUpdate();
 
