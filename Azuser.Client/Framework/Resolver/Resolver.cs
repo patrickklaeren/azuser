@@ -27,7 +27,7 @@ namespace Azuser.Client.Framework.Resolver
             builder.RegisterType<ShellManager>().As<IShellManager>();
 
 #if DEBUG
-            builder.RegisterType<UpdateService>().As<IUpdateService>();
+            builder.RegisterType<DebugUpdateService>().As<IUpdateService>();
 #else
             builder.RegisterType<UpdateService>().As<IUpdateService>();
 #endif
