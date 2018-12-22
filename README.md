@@ -17,7 +17,7 @@ Azuser automatically manages users for logins on your server.
 
 ## User guide
 
-You can download Azuser from here. It will automatically update on every restart.
+You can download Azuser from [here](http://inzanit.com/Releases/Azuser/Setup.exe). It will automatically update on every restart (should there be an update).
 
 ## Spot a bug, issue or something else?
 
@@ -33,7 +33,6 @@ This is a small personal project, and is maintained during personal time - timel
 
 | Feature                     | ETA      | Issue link                                               |
 |-----------------------------|----------|----------------------------------------------------------|
-| Installer                   | Dec 2018 | [Link](https://github.com/Inzanit/azuser/issues/1)       |
 | Theme switching (dark mode) | Dec 2018 | [Link](https://github.com/Inzanit/azuser/issues/2)       |
 | Browse users by database    | Jan 2019 | [Link](https://github.com/Inzanit/azuser/issues/3)       |
 | Release standalone package  | 2019     | [Link](https://github.com/Inzanit/azuser/issues/4)       |
@@ -43,7 +42,7 @@ This is a small personal project, and is maintained during personal time - timel
 
 Azuser is split into two projects, the desktop client and the database management project.
 
-The desktop client is written in WPF, using the MVVM architecture, targeting .NET Framework 4.7, using C#7.0. A number of small, reliable, dependencies have been added:
+The desktop client is written in WPF, using the MVVM architecture, targeting .NET Framework 4.7, using C#7. A number of small, reliable, dependencies have been added:
 
 - [Mahapps Metro](https://github.com/MahApps/MahApps.Metro) for styling and controls
 - [Serilog](https://github.com/serilog/serilog) for logging
