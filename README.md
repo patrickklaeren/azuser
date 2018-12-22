@@ -4,7 +4,7 @@
 
 ## Motivation
 
-Pronounced As-user, Azuser eliminates the need for using a command line interface to manage SQL Server users and logins. It is currently not possible to easily manage users for databases through a GUI like Server Server Management Studio (SSMS) - user management is achieved through the CLI with verbose options to configure users' roles for a given database. Azuser is a lightweight desktop application written in WPF, aimed at completely removing the need for any command line interface, ensuring database users have and get the right access.
+Pronounced As-user, Azuser eliminates the need for using a command line interface to manage SQL Server users and logins. It is currently not possible to easily manage users for databases through a GUI like SQL Server Management Studio (SSMS) - user management is achieved through the CLI with verbose options to configure users' roles for a given database. Azuser is a lightweight desktop application written in WPF, aimed at completely removing the need for any command line interface, ensuring database users have and get the right access.
 
 ## What does it do
 
