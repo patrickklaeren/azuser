@@ -1,0 +1,130 @@
+﻿<UserControl x:Class="Azuser.Client.Views.User.LoginDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Azuser.Client.Views.User"
+             xmlns:helpers="clr-namespace:Azuser.Client.Helpers"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:LoginDetailsViewModel}">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type local:ServerRolesViewModel}">
+            <local:ServerRoles/>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TabControl Margin="5">
+            <TabItem Header="Login">
+                <Grid Margin="5"
+                      MinWidth="450"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Text="Username"
+                               IsEnabled="{Binding IsNewUser}"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+
+                    <TextBox Grid.Row="0"
+                             Grid.Column="1"
+                             Margin="5"
+                             VerticalAlignment="Center"
+                             IsEnabled="{Binding IsNewUser}"
+                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Text="Password"
+                               IsEnabled="{Binding IsNewUser}"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+
+                    <PasswordBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Margin="5"
+                                 VerticalAlignment="Center"
+                                 IsEnabled="{Binding IsNewUser}"
+                                 helpers:PasswordHelper.Attach="True"
+                                 helpers:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
+                               Text="Confirm Password"
+                               IsEnabled="{Binding IsNewUser}"
+                               VerticalAlignment="Center"
+                               Margin="5" />
+
+                    <PasswordBox Grid.Row="2"
+                                 Grid.Column="1"
+                                 Margin="5"
+                                 IsEnabled="{Binding IsNewUser}"
+                                 VerticalAlignment="Center"
+                                 helpers:PasswordHelper.Attach="True"
+                                 helpers:PasswordHelper.Password="{Binding ConfirmedPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Roles" IsSelected="{Binding IsRolesSelected, Mode=OneWay}">
+                <TabItem.Style>
+                    <Style TargetType="{x:Type TabItem}"
+                           BasedOn="{StaticResource MetroTabItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsNewUser}"
+                                         Value="True">
+                                <Setter Property="Visibility"
+                                        Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsNewUser}"
+                                         Value="False">
+                                <Setter Property="Visibility"
+                                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+
+                <ContentControl Content="{Binding RolesViewModel}" />
+            </TabItem>
+        </TabControl>
+
+        <WrapPanel Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalAlignment="Right"
+                   Margin="5">
+            <Button Content="Save"
+                    Margin="5"
+                    IsDefault="True"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    Command="{Binding SaveCommand}" />
+            <Button Content="Cancel"
+                    Margin="5"
+                    IsCancel="True"
+                    Width="100"
+                    HorizontalAlignment="Right"
+                    Command="{Binding CancelCommand}" />
+        </WrapPanel>
+    </Grid>
+
+
+</UserControl>

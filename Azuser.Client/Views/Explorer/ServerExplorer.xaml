@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="Azuser.Client.Views.Explorer.ServerExplorer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Azuser.Client.Views.Explorer"
+             xmlns:user="clr-namespace:Azuser.Client.Views.User"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance local:ServerExplorerViewModel}">
+
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type user:LoginDetailsViewModel}">
+            <user:LoginDetails />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <TabControl Margin="5">
+            <TabControl.Style>
+                <Style TargetType="{x:Type TabControl}"
+                       BasedOn="{StaticResource MetroTabControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ShowOverlay}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ShowOverlay}" Value="False">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TabControl.Style>
+            <TabItem Header="Logins">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0"
+                              ItemsSource="{Binding ServerLoginItemsSource}"
+                              SelectedItem="{Binding SelectedLogin}"
+                              SelectionMode="Single">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Principal Id"
+                                                Binding="{Binding PrincipalId}"
+                                                Width="Auto" />
+                            <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Name}"
+                                                Width="*" />
+                            <DataGridTextColumn Header="Created"
+                                                Binding="{Binding Created, StringFormat='dd/MM/yyyy HH:mm:ss'}"
+                                                Width="Auto" />
+                            <DataGridTextColumn Header="Last Modified"
+                                                Binding="{Binding LastModified, StringFormat='dd/MM/yyyy HH:mm:ss'}"
+                                                Width="Auto" />
+                            <DataGridTextColumn Header="Default Database"
+                                                Binding="{Binding DefaultDatabase}"
+                                                Width="*" />
+                            <DataGridCheckBoxColumn Header="Disabled"
+                                                    Binding="{Binding IsDisabled}"
+                                                    Width="Auto"
+                                                    ElementStyle="{DynamicResource MetroDataGridCheckBox}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <WrapPanel Grid.Row="1"
+                               HorizontalAlignment="Right">
+                        <Button Content="Add Login"
+                                Margin="5"
+                                Width="100"
+                                Command="{Binding AddLoginCommand}" />
+                        <Button Content="Edit Login"
+                                Margin="5"
+                                Width="100"
+                                IsEnabled="{Binding EnableDeleteLogin, UpdateSourceTrigger=PropertyChanged}"
+                                Command="{Binding EditLoginCommand}" />
+                        <Button Content="Delete Login"
+                                Margin="5"
+                                Width="100"
+                                Command="{Binding DeleteLoginCommand}"
+                                IsEnabled="{Binding EnableDeleteLogin, UpdateSourceTrigger=PropertyChanged}"/>
+                    </WrapPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Databases">
+                <DataGrid ItemsSource="{Binding DatabaseItemsSource}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"
+                                            Binding="{Binding Name}"
+                                            Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+
+        <ContentControl Content="{Binding OverlayViewModel}"
+                        d:IsHidden="True" />
+
+    </Grid>
+
+</UserControl>
