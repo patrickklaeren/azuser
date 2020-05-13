@@ -1,0 +1,12 @@
+mode: Mainline
+assembly-informational-format: '{SemVer}'
+branches:
+  master:
+    regex: master
+    track-merge-target: false
+    increment: Patch
+  develop:
+    mode: ContinuousDeployment
+    regex: develop
+    tag: 'staging'
+    increment: Minor

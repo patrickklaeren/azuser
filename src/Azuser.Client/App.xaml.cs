@@ -6,6 +6,7 @@ using Azuser.Client.Helpers;
 using Azuser.Client.Views.Explorer;
 using Azuser.Client.Views.Login;
 using Azuser.Client.Views.Shell;
+using Azuser.Client.Views.User;
 using Azuser.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -45,6 +46,7 @@ namespace Azuser.Client
                 .AddTransient<ShellViewModel>()
                 .AddTransient<LoginViewModel>()
                 .AddTransient<ServerExplorerViewModel>()
+                .AddTransient<LoginDetailsViewModel>()
                 .BuildServiceProvider();
 
             Log.Debug("Resolver initialized");

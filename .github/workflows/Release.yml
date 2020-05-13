@@ -1,0 +1,25 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  windows:
+    name: Windows
+    runs-on: windows-latest
+    env:
+     Runtime: win-x64
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run './build.cmd Clean Restore Compile Publish'
+        run: ./build.cmd Clean Restore Compile Publish
+      - uses: actions/upload-artifact@v1
+        with:
+          name: self-contained-single-win-x64
+          path: artifacts/self-contained-single-win-x64
+      - uses: actions/upload-artifact@v1
+        with:
+          name: self-contained-win-x64
+          path: artifacts/self-contained-win-x64

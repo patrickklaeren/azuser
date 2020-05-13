@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Client", "src\Azuser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Services", "src\Azuser.Services\Azuser.Services.csproj", "{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_build", "build\_build.csproj", "{E4D91833-DFB0-4D5A-A830-60EAB5D6B89C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4D91833-DFB0-4D5A-A830-60EAB5D6B89C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4D91833-DFB0-4D5A-A830-60EAB5D6B89C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
