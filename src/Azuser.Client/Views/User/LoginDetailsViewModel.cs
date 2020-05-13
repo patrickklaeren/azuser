@@ -4,10 +4,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Azuser.Client.DatabaseScopes;
 using Azuser.Client.Framework;
-using Azuser.Client.Framework.Resolver;
 using Azuser.Client.Helpers;
 using Azuser.Services;
-using GalaSoft.MvvmLight.CommandWpf;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace Azuser.Client.Views.User
@@ -17,7 +16,7 @@ namespace Azuser.Client.Views.User
         private readonly IMessageBoxHelper _messageBoxHelper;
         private readonly IDatabaseService _databaseService;
         private readonly IShellManager _shellManager;
-        private readonly IResolver _resolver;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private string _username;
         private string _password;
@@ -30,12 +29,12 @@ namespace Azuser.Client.Views.User
         private ServerRolesViewModel _rolesViewModel;
 
         public LoginDetailsViewModel(IMessageBoxHelper messageBoxHelper, IDatabaseService databaseService,
-            IShellManager shellManager, IResolver resolver)
+            IShellManager shellManager, IServiceScopeFactory serviceScopeFactory)
         {
             _messageBoxHelper = messageBoxHelper;
             _databaseService = databaseService;
             _shellManager = shellManager;
-            _resolver = resolver;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public ServerRolesViewModel RolesViewModel
@@ -97,7 +96,9 @@ namespace Azuser.Client.Views.User
 
         private async Task LoadUserRoles()
         {
-            RolesViewModel = _resolver.Get<ServerRolesViewModel>();
+            using var scope = _serviceScopeFactory.CreateScope();
+            
+            RolesViewModel = scope.ServiceProvider.GetRequiredService<ServerRolesViewModel>();
 
             await RolesViewModel.InitializeAsync(Username, _connectionScope);
         }

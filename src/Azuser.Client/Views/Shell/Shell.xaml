@@ -12,6 +12,7 @@
                  Height="450"
                  Width="800"
                  WindowStartupLocation="CenterScreen"
+                 Icon="../../favicon.ico"
                  d:DataContext="{d:DesignInstance shell:ShellViewModel}">
 
     <mah:MetroWindow.Resources>

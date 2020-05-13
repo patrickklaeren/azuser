@@ -2,9 +2,12 @@
 using System.Threading.Tasks;
 using System.Windows;
 using Azuser.Client.Framework;
-using Azuser.Client.Framework.Resolver;
+using Azuser.Client.Helpers;
+using Azuser.Client.Views.Explorer;
+using Azuser.Client.Views.Login;
 using Azuser.Client.Views.Shell;
-using Azuser.Client.Views.Updater;
+using Azuser.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Core;
 using Serilog.Formatting.Json;
@@ -18,7 +21,9 @@ namespace Azuser.Client
     {
         public static readonly string Version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        protected override async void OnStartup(StartupEventArgs e)
+        private static IServiceProvider ServiceProvider;
+
+        protected override void OnStartup(StartupEventArgs e)
         {
             Log.Logger = CreateLogger();
 
@@ -30,20 +35,23 @@ namespace Azuser.Client
 
             Log.Debug("Subscribed to unhandled exceptions");
 
-            Resolver.Initialise();
+            ServiceProvider = new ServiceCollection()
+                .AddSingleton<IMessengerService, MessengerService>()
+                .AddSingleton<IMessageBoxHelper, MessageBoxHelper>()
+                .AddSingleton<IShellManager, ShellManager>()
+                .AddSingleton<IRegistryService, RegistryService>()
+                .AddTransient<IDatabaseService, DatabaseService>()
+                .AddTransient<Shell>()
+                .AddTransient<ShellViewModel>()
+                .AddTransient<LoginViewModel>()
+                .AddTransient<ServerExplorerViewModel>()
+                .BuildServiceProvider();
 
             Log.Debug("Resolver initialized");
 
             Log.Information("Checking for update");
 
-            var hasUpdated = await TryUpdate();
-
-            if (hasUpdated)
-            {
-                return;
-            }
-
-            var shell = Resolver.Get<Shell>();
+            var shell = ServiceProvider.GetRequiredService<Shell>();
 
             shell.Show();
 
@@ -73,33 +81,6 @@ namespace Azuser.Client
         private static void OnUnhandledTaskSchedulerException(object sender, UnobservedTaskExceptionEventArgs e)
         {
             Log.Fatal(e.Exception, "Client experienced unhandled exception in task scheduler");
-        }
-
-        private static async Task<bool> TryUpdate()
-        {
-            var updateService = Resolver.Get<IUpdateService>();
-
-            var updateAvailable = await updateService.TryCheckForUpdate();
-
-            if (!updateAvailable)
-                return false;
-
-            var window = Resolver.Get<Updater>();
-
-            var dataContext = (UpdaterViewModel) window.DataContext;
-
-            var progress = new Progress<int>(value => dataContext.CurrentProgress = value);
-
-            window.Show();
-
-            var updated = await updateService.TryUpdate(progress);
-
-            if (updated.IsSuccessful)
-            {
-                updateService.TryRestart();
-            }
-
-            return updated.IsSuccessful;
         }
     }
 }

@@ -2,16 +2,16 @@
 using System.Windows.Input;
 using Azuser.Client.DatabaseScopes;
 using Azuser.Client.Framework;
-using Azuser.Client.Framework.Resolver;
 using Azuser.Client.Helpers;
 using Azuser.Client.Views.Explorer;
 using Azuser.Client.Views.Login;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Azuser.Client.Views.Shell
 {
     public class ShellViewModel : ViewModelBase
     {
-        private readonly IResolver _resolver;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private ConnectionScope _connectionScope;
 
@@ -21,9 +21,9 @@ namespace Azuser.Client.Views.Shell
         private string _loggedInServerAddress;
         private string _loggedInUser;
 
-        public ShellViewModel(IResolver resolver, IMessengerService messengerService)
+        public ShellViewModel(IServiceScopeFactory serviceScopeFactory, IMessengerService messengerService)
         {
-            _resolver = resolver;
+            _serviceScopeFactory = serviceScopeFactory;
 
             messengerService.Register<LoadingDataMessage>(this, msg => IsLoadingData = msg.IsLoadingData);
         }
@@ -65,8 +65,10 @@ namespace Azuser.Client.Views.Shell
         }
 
         public async Task InitializeAsync()
-        {
-            var loginViewModel = _resolver.Get<LoginViewModel>();
+        {            
+            using var scope = _serviceScopeFactory.CreateScope();
+
+            var loginViewModel = scope.ServiceProvider.GetRequiredService<LoginViewModel>();
 
             CurrentViewModel = loginViewModel;
 
@@ -76,7 +78,7 @@ namespace Azuser.Client.Views.Shell
             LoggedInServerAddress = _connectionScope.ServerAddress;
             LoggedInUser = _connectionScope.Username;
 
-            var explorerViewModel = _resolver.Get<ServerExplorerViewModel>();
+            var explorerViewModel = scope.ServiceProvider.GetRequiredService<ServerExplorerViewModel>();
 
             await explorerViewModel.InitializeAsync(_connectionScope);
 

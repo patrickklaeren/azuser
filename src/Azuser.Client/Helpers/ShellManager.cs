@@ -1,4 +1,6 @@
-﻿namespace Azuser.Client.Helpers
+﻿using Azuser.Client.Framework;
+
+namespace Azuser.Client.Helpers
 {
     public interface IShellManager
     {

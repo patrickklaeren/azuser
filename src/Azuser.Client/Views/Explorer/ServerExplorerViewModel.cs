@@ -6,10 +6,10 @@ using System.Windows;
 using System.Windows.Input;
 using Azuser.Client.DatabaseScopes;
 using Azuser.Client.Framework;
-using Azuser.Client.Framework.Resolver;
 using Azuser.Client.Helpers;
 using Azuser.Client.Views.User;
 using Azuser.Services;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
  
 namespace Azuser.Client.Views.Explorer
@@ -19,7 +19,7 @@ namespace Azuser.Client.Views.Explorer
         private readonly IDatabaseService _databaseService;
         private readonly IShellManager _shellManager;
         private readonly IMessageBoxHelper _messageBoxHelper;
-        private readonly IResolver _resolver;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private List<DatabaseViewModel> _databaseItemsSource;
         private List<ServerLoginViewModel> _serverLoginItemsSource;
@@ -28,12 +28,12 @@ namespace Azuser.Client.Views.Explorer
         private ServerLoginViewModel _selectedLogin;
 
         public ServerExplorerViewModel(IDatabaseService databaseService, IShellManager shellManager, 
-            IMessageBoxHelper messageBoxHelper, IResolver resolver)
+            IMessageBoxHelper messageBoxHelper, IServiceScopeFactory serviceScopeFactory)
         {
             _databaseService = databaseService;
             _shellManager = shellManager;
             _messageBoxHelper = messageBoxHelper;
-            _resolver = resolver;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public bool ShowOverlay => OverlayViewModel != null;
@@ -114,7 +114,9 @@ namespace Azuser.Client.Views.Explorer
 
         private async Task AddLogin()
         {
-            var viewModel = _resolver.Get<LoginDetailsViewModel>();
+            using var scope = _serviceScopeFactory.CreateScope();
+            
+            var viewModel = scope.ServiceProvider.GetRequiredService<LoginDetailsViewModel>();
 
             OverlayViewModel = viewModel;
 
@@ -134,8 +136,10 @@ namespace Azuser.Client.Views.Explorer
         {
             if (SelectedLogin == null)
                 return;
+            
+            using var scope = _serviceScopeFactory.CreateScope();
 
-            var viewModel = _resolver.Get<LoginDetailsViewModel>();
+            var viewModel = scope.ServiceProvider.GetRequiredService<LoginDetailsViewModel>();
 
             OverlayViewModel = viewModel;
 

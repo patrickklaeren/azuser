@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>Azuser</AssemblyName>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro">
+      <Version>2.0.0-alpha0775</Version>
+    </PackageReference>
+    <PackageReference Include="MahApps.Metro.IconPacks">
+      <Version>4.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>5.0.0-preview.3.20215.2</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog">
+      <Version>2.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="Serilog.Sinks.RollingFile">
+      <Version>3.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Azuser.Services\Azuser.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Logo_light.png" />
+  </ItemGroup>
+</Project>

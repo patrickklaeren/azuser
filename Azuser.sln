@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Client", "Azuser.Client\Azuser.Client.csproj", "{194758BB-6E52-4835-821B-4FFFF9D5AEEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Client", "src\Azuser.Client\Azuser.Client.csproj", "{194758BB-6E52-4835-821B-4FFFF9D5AEEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Services", "Azuser.Services\Azuser.Services.csproj", "{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azuser.Services", "src\Azuser.Services\Azuser.Services.csproj", "{2B2D1630-EE37-461C-8A16-FFDEFF7F1BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
